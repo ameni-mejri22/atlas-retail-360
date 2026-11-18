@@ -1,0 +1,30 @@
+
+{
+  "test_id": "T07",
+  "description": "Événements CDC reçus dans le désordre",
+  "input": {
+    "entity_key": "K",
+    "events": [
+      {
+        "source_version": 1,
+        "price": "100.00",
+        "received_order": 1
+      },
+      {
+        "source_version": 3,
+        "price": "120.00",
+        "received_order": 2
+      },
+      {
+        "source_version": 2,
+        "price": "110.00",
+        "received_order": 3
+      }
+    ]
+  },
+  "expected": {
+    "current_source_version": 3,
+    "current_price": "120.00",
+    "business_line_count": 1
+  }
+}

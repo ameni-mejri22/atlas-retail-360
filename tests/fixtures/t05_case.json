@@ -1,0 +1,29 @@
+
+{
+  "test_id": "T05",
+  "description": "Stock final et rejeu idempotent",
+  "input": {
+    "opening_stock": 10,
+    "movements": [
+      {
+        "movement_id": "M1",
+        "type": "receipt",
+        "quantity": 5
+      },
+      {
+        "movement_id": "M2",
+        "type": "sale",
+        "quantity": -4
+      },
+      {
+        "movement_id": "M3",
+        "type": "accepted_return_restocked",
+        "quantity": 1
+      }
+    ]
+  },
+  "expected": {
+    "stock_after_first_application": 12,
+    "stock_after_replay": 12
+  }
+}

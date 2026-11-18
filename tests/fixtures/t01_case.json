@@ -1,0 +1,44 @@
+{
+    "test_id": "T01",
+    "description": "Remise globale",
+    "input": {
+      "order_discount": "23.00",
+      "lines": [
+        {
+          "line_id": "L1",
+          "qty_invoiced": "2",
+          "unit_price_ht": "100.00",
+          "line_discount_ht": "20.00",
+          "unit_cost": "60.00"
+        },
+        {
+          "line_id": "L2",
+          "qty_invoiced": "1",
+          "unit_price_ht": "50.00",
+          "line_discount_ht": "0.00",
+          "unit_cost": "20.00"
+        }
+      ]
+    },
+    "expected": {
+      "lines": [
+        {
+          "line_id": "L1",
+          "base_ht": "180.00",
+          "order_discount_allocation": "18.00",
+          "net_sales_ht": "162.00",
+          "cost": "120.00"
+        },
+        {
+          "line_id": "L2",
+          "base_ht": "50.00",
+          "order_discount_allocation": "5.00",
+          "net_sales_ht": "45.00",
+          "cost": "20.00"
+        }
+      ],
+      "total_sales_ht": "207.00",
+      "total_cost": "140.00",
+      "gross_margin": "67.00"
+    }
+  }

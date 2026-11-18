@@ -1,0 +1,16 @@
+
+{
+  "test_id": "T04",
+  "description": "Conversion CHF vers EUR",
+  "input": {
+    "currency": "CHF",
+    "sales_ht": "100.00",
+    "cost": "60.00",
+    "fx_rate_eur_chf": "1.05"
+  },
+  "expected": {
+    "sales_eur": "105.00",
+    "cost_eur": "63.00",
+    "gross_margin_eur": "42.00"
+  }
+}

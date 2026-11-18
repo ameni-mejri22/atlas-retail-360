@@ -1,0 +1,17 @@
+
+{
+  "test_id": "T06",
+  "description": "Ligne facturée mais annulée",
+  "input": {
+    "line_id": "L1",
+    "qty_invoiced": "2",
+    "unit_price_ht": "100.00",
+    "unit_cost": "60.00",
+    "is_cancelled": true
+  },
+  "expected": {
+    "sales_ht": "0.00",
+    "cost": "0.00",
+    "consistency_anomaly": true
+  }
+}

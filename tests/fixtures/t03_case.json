@@ -1,0 +1,38 @@
+
+{
+  "test_id": "T03",
+  "description": "T01 avec retour accepté sans remise en stock",
+  "input": {
+    "order_discount": "23.00",
+    "lines": [
+      {
+        "line_id": "L1",
+        "qty_invoiced": "2",
+        "unit_price_ht": "100.00",
+        "line_discount_ht": "20.00",
+        "unit_cost": "60.00"
+      },
+      {
+        "line_id": "L2",
+        "qty_invoiced": "1",
+        "unit_price_ht": "50.00",
+        "line_discount_ht": "0.00",
+        "unit_cost": "20.00"
+      }
+    ],
+    "return": {
+      "line_id": "L1",
+      "qty_returned": "1",
+      "refund_ht": "81.00",
+      "restocked": false
+    }
+  },
+  "expected": {
+    "return_sales_impact": "-81.00",
+    "return_cost_impact": "0.00",
+    "return_margin_impact": "-81.00",
+    "total_sales_ht": "126.00",
+    "net_cost": "140.00",
+    "gross_margin": "-14.00"
+  }
+}

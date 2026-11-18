@@ -1,0 +1,17 @@
+
+{
+  "test_id": "T08",
+  "description": "Calcul de l'atteinte du budget",
+  "input": {
+    "sales": [
+      "60.00",
+      "40.00"
+    ],
+    "budget": "200.00"
+  },
+  "expected": {
+    "total_sales_ht": "100.00",
+    "budget": "200.00",
+    "budget_achievement_pct": "50.00"
+  }
+}

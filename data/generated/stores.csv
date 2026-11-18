@@ -1,0 +1,13 @@
+store_id,country,timezone,opening_date,closing_date,label
+ST001,FR,Europe/Paris,2024-09-01,,Magasin Paris Centre
+ST002,FR,Europe/Paris,2024-09-01,,Magasin Lyon Part-Dieu
+ST003,FR,Europe/Paris,2024-09-01,,Magasin Marseille Centre
+ST004,FR,Europe/Paris,2024-09-01,,Magasin Lille Centre
+ST005,FR,Europe/Paris,2024-09-01,,Centre logistique Paris
+ST006,TN,Africa/Tunis,2024-09-01,,Magasin Tunis Centre
+ST007,TN,Africa/Tunis,2024-09-01,,Magasin Sousse Centre
+ST008,TN,Africa/Tunis,2024-09-01,,Magasin Sfax Centre
+ST009,TN,Africa/Tunis,2024-09-01,,Centre logistique Tunis
+ST010,CH,Europe/Zurich,2024-09-01,,Magasin Genève Centre
+ST011,CH,Europe/Zurich,2024-09-01,,Magasin Lausanne Centre
+ST012,CH,Europe/Zurich,2024-09-01,,Magasin Zurich Centre

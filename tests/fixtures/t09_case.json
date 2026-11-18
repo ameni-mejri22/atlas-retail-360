@@ -1,0 +1,29 @@
+
+{
+  "test_id": "T09",
+  "description": "Sélection du coût produit selon sa période de validité",
+  "input": {
+    "sale_date": "2025-01-15",
+    "quantity": "2",
+    "unit_price_ht": "80.00",
+    "cost_versions": [
+      {
+        "effective_from": "2024-09-01",
+        "effective_to": "2025-01-15",
+        "unit_cost": "40.00"
+      },
+      {
+        "effective_from": "2025-01-15",
+        "effective_to": null,
+        "unit_cost": "50.00"
+      }
+    ]
+  },
+  "expected": {
+    "selected_unit_cost": "50.00",
+    "matched_cost_versions": 1,
+    "sales_ht": "160.00",
+    "cost": "100.00",
+    "gross_margin": "60.00"
+  }
+}

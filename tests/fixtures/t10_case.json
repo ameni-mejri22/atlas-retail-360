@@ -1,0 +1,22 @@
+
+{
+  "test_id": "T10",
+  "description": "Taux de change trop ancien pour valoriser une facture",
+  "input": {
+    "invoice_date": "2025-01-10",
+    "currency": "CHF",
+    "source_amount": "100.00",
+    "available_fx_rates": [
+      {
+        "rate_date": "2025-01-01",
+        "eur_chf": "1.05"
+      }
+    ]
+  },
+  "expected": {
+    "source_amount_preserved": "100.00",
+    "certified_sales_eur": null,
+    "valuation_status": "pending",
+    "reason": "no_eligible_fx_rate"
+  }
+}

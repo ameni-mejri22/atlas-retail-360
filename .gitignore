@@ -1,0 +1,21 @@
+# Environnement Python
+.venv/
+venv/
+
+# Fichiers Python temporaires
+__pycache__/
+*.py[cod]
+
+# Configuration locale
+.env
+.env.*
+
+# Éditeurs
+.vscode/
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
