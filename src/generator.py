@@ -2,10 +2,18 @@
 import argparse
 import random
 from pathlib import Path
+
 from src.product_catalog import generate_product_versions, save_product_versions
 from src.store_catalog import save_stores
 from src.fx_catalog import generate_fx_rates, save_fx_rates
 from src.order_catalog import generate_orders, save_orders
+from src.order_line_catalog import (
+    load_product_catalog,
+    load_fx_rates,
+    load_opening_stock,
+    generate_order_lines,
+    save_order_lines,
+)
 
 DEFAULT_SEED = 42
 VALID_PROFILES = ("MICRO", "STANDARD", "SCALE")
@@ -14,6 +22,7 @@ ORDER_COUNTS = {
     "STANDARD": 30000,
     "SCALE": 300000,
 }
+
 
 def parse_args():
     parser = argparse.ArgumentParser(
@@ -46,6 +55,7 @@ def generate_demo_values(seed, count=5):
 
 def main():
     args = parse_args()
+    args.output_dir.mkdir(parents=True, exist_ok=True)
 
     print("Atlas Retail 360 — Générateur")
     print(f"Seed       : {args.seed}")
@@ -55,21 +65,30 @@ def main():
 
     demo_values = generate_demo_values(args.seed)
     print(f"Valeurs de vérification : {demo_values}")
-        # Génération de la source product_versions
-    product_rows = generate_product_versions(seed=args.seed)
 
+    # 1. Génération de product_versions
+    product_rows = generate_product_versions(seed=args.seed)
     product_output = args.output_dir / "product_versions.parquet"
-    
-        # Génération de la source stores
+
+    product_table = save_product_versions(
+        product_rows,
+        product_output,
+    )
+
+    print("Source product_versions générée avec succès.")
+    print(f"Nombre de produits : {product_table.num_rows}")
+    print(f"Fichier : {product_output}")
+
+    # 2. Génération de stores
     store_output = args.output_dir / "stores.csv"
     save_stores(store_output)
-    
-        # Génération de la source fx_rates
+
+    # 3. Génération de fx_rates
     fx_rows = generate_fx_rates(seed=args.seed)
     fx_output = args.output_dir / "fx_rates.csv"
     save_fx_rates(fx_rows, fx_output)
-    
-        # Génération de la source orders
+
+    # 4. Génération de orders
     order_count = ORDER_COUNTS[args.profile]
 
     order_rows = generate_orders(
@@ -80,14 +99,54 @@ def main():
     order_output = args.output_dir / "orders.jsonl"
     save_orders(order_rows, order_output)
 
-    product_table = save_product_versions(
-        product_rows,
-        product_output,
+    print("Source orders générée avec succès.")
+    print(f"Nombre de commandes : {len(order_rows)}")
+
+    # 5. Chargement des produits, taux et stocks initiaux
+    products = load_product_catalog(product_output)
+    rates = load_fx_rates(fx_output)
+
+    opening_stock = load_opening_stock(
+        args.output_dir / "opening_stock.csv"
     )
 
-    print("Source product_versions générée avec succès.")
-    print(f"Nombre de produits : {product_table.num_rows}")
-    print(f"Fichier : {product_output}")
+    # Copie de travail du stock initial
+    stock = opening_stock.copy()
+
+    # 6. Génération des lignes de commande
+    rng = random.Random(args.seed)
+    order_line_rows = []
+
+    # Traitement des commandes dans l'ordre chronologique
+    sorted_orders = sorted(
+        order_rows,
+        key=lambda order: (
+            order["order_ts"],
+            order["order_id"],
+        ),
+    )
+
+    for order in sorted_orders:
+        lines = generate_order_lines(
+            order=order,
+            products=products,
+            rates=rates,
+            rng=rng,
+            stock=stock,
+        )
+        order_line_rows.extend(lines)
+
+    # 7. Enregistrement de order_lines.csv
+    order_line_output = args.output_dir / "order_lines.csv"
+
+    save_order_lines(
+        order_line_rows,
+        order_line_output,
+    )
+
+    print("Source order_lines générée avec succès.")
+    print(f"Nombre de lignes : {len(order_line_rows)}")
+    print(f"Fichier : {order_line_output}")
 
 
 if __name__ == "__main__":
